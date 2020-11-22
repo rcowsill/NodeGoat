@@ -3,3 +3,13 @@ docker-compose.yml
 .dockerignore
 .git
 .gitignore
+.jshintrc
+.travis.yml
+app.json
+Procfile
+cypress.json
+Gruntfile.js
+nodemon.json
+*.md
+node_modules
+test
