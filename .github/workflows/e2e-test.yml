@@ -21,12 +21,12 @@ jobs:
           key: ${{ runner.os }}-node${{ matrix.node-version }}-cache-${{ hashFiles('package-lock.json') }}
       - name: Install dependencies
         run: |
-          du -d 0 -h ~/.npm
-          du -d 0 -h ~/.cache
+          du -d 0 -h ~/.npm || true
+          du -d 0 -h ~/.cache || true
           ls -la ~/.cache
           npm install
           git diff package-lock.json
           npm run cy:verify
-          du -d 0 -h ~/.npm
-          du -d 0 -h ~/.cache
+          du -d 0 -h ~/.npm || true
+          du -d 0 -h ~/.cache || true
           ls -la ~/.cache
