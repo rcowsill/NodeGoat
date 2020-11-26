@@ -32,3 +32,13 @@ jobs:
           npm run cy:verify
           du -d 0 -h ~/.npm || true
           du -d 0 -h ~/.cache || true
+      - name: Start MongoDB
+        run: |
+          sudo apt-get install -y docker
+          docker run -d -p 27017:27017 mongo:4.0
+          docker ps -a
+      - name: Test nodegoat
+        run: |
+          NODE_ENV=test npm start -- --silent &
+          npm run test:ci
+
