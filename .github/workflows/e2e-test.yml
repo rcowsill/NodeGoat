@@ -18,7 +18,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: '~/.npm'
-          key: ${{ runner.os }}-node${{ node-version }}-cache-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-cache-${{ hashFiles('package-lock.json') }}
       - name: Install dependencies
         run: |
           du -d 0 -h ~/.npm
