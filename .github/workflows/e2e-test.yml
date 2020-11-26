@@ -25,9 +25,7 @@ jobs:
         run: |
           du -d 0 -h ~/.npm || true
           du -d 0 -h ~/.cache || true
-          ls -la ~/.cache || true
           npm ci
           npm run cy:verify
           du -d 0 -h ~/.npm || true
           du -d 0 -h ~/.cache || true
-          ls -la ~/.cache || true
