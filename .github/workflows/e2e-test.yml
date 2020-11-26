@@ -15,10 +15,18 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
-          node -v
-          npm -v
+      - uses: actions/cache@v2
+        with:
+          path: '~/.npm'
+          key: ${{ runner.os }}-node${{ node-version }}-cache-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        run: |
+          du -d 0 -h ~/.npm
+          du -d 0 -h ~/.cache
+          ls -la ~/.cache
           npm install
+          git diff package-lock.json
           npm run cy:verify
-          ls -la
-          ls -la ~/
+          du -d 0 -h ~/.npm
+          du -d 0 -h ~/.cache
+          ls -la ~/.cache
