@@ -1,5 +1,7 @@
 name: E2E Test
-on: [push, pull_request]
+
+true: [push, pull_request]
+# ^ ???
 
 jobs:
   e2e-test:
