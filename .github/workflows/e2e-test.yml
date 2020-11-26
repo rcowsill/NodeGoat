@@ -18,8 +18,8 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: |
-            '~/.npm'
-            '~/.cache'
+            ~/.npm
+            ~/.cache
           key: ${{ runner.os }}-node${{ matrix.node-version }}-and-cypress-${{ hashFiles('package-lock.json') }}
       - name: Install dependencies
         run: |
