@@ -15,5 +15,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm run cy:verify
+      - run: |
+          node -v
+          npm -v
+          npm install
+          npm run cy:verify
+          ls -la
+          ls -la ~/
