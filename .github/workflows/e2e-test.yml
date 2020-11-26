@@ -22,7 +22,7 @@ jobs:
           path: |
             ~/.npm
             ~/.cache
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-cypress-${{ hashFiles("package-lock.json") }}
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-cypress-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
         run: |
