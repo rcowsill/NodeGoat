@@ -17,15 +17,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - uses: actions/cache@v2
         with:
-          path: '~/.npm'
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-cache-${{ hashFiles('package-lock.json') }}
+          path: |
+            '~/.npm'
+            '~/.cache'
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-and-cypress-${{ hashFiles('package-lock.json') }}
       - name: Install dependencies
         run: |
           du -d 0 -h ~/.npm || true
           du -d 0 -h ~/.cache || true
           ls -la ~/.cache || true
-          npm install
-          git diff package-lock.json
+          npm ci
           npm run cy:verify
           du -d 0 -h ~/.npm || true
           du -d 0 -h ~/.cache || true
