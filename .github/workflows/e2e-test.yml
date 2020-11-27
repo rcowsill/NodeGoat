@@ -26,7 +26,6 @@ jobs:
             ~/.npm
             ~/.cache
           key: ${{ runner.os }}-node${{ matrix.node-version }}-cypress-${{ hashFiles('package-lock.json') }}
-        id: deps-cache
 
       - name: Install dependencies
         run: |
