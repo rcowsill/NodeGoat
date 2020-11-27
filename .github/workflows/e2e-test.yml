@@ -10,7 +10,7 @@ jobs:
         node-version: ["12.x"]
 
     steps:
-      - name: Checkout ${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }} @ ${{ GITHUB_REF }}
+      - name: Checkout ${{ env.GITHUB_SERVER_URL }}/${{ github.repository }} @ ${{ github.ref }}
         uses: actions/checkout@v2
 
       - name: Set up Node.js ${{ matrix.node-version }}
