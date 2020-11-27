@@ -19,12 +19,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: |
-          npm ci
-          npm run cy:verify
+      - name: Use cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            ~/.cache
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-ci-cypress-${{ hashFiles('package-lock.json') }}
+        id: deps-cache
 
-      - name: Start MongoDB and NodeGoat
+      - name: Install dependencies
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Prepare Cypress
+        run: npm run cy:verify
+
+      - name: Start MongoDB
         run: |
           docker run -d -p 27017:27017 mongo:4.0
           timeout 60s bash -c 'until nc -z -w 2 localhost 27017 && echo MongoDB ready; do sleep 2; done'
