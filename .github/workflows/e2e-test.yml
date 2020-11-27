@@ -23,17 +23,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            node_modules
+            ~/.npm
             ~/.cache
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-ci-cypress-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-cypress-${{ hashFiles('package-lock.json') }}
         id: deps-cache
 
       - name: Install dependencies
-        if: steps.deps-cache.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Prepare Cypress
-        run: npm run cy:verify
+        run: |
+          npm ci
+          npm run cy:verify
 
       - name: Start MongoDB
         run: |
