@@ -10,7 +10,7 @@ jobs:
         node-version: ["12.x"]
 
     steps:
-      - name: Checkout ${{ env.GITHUB_SERVER_URL }}/${{ github.repository }} @ ${{ github.ref }}
+      - name: Checkout https://github.com/${{ github.repository }} @ ${{ github.ref }}
         uses: actions/checkout@v2
 
       - name: Set up Node.js ${{ matrix.node-version }}
@@ -18,18 +18,21 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Load cache
+      - name: Use cache
         uses: actions/cache@v2
         with:
           path: |
-            ~/.npm
+            node_modules
             ~/.cache
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-cypress-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-ci-cypress-${{ hashFiles('package-lock.json') }}
+        id: deps-cache
 
       - name: Install dependencies
-        run: |
-          npm ci
-          npm run cy:verify
+        if: steps.deps-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Prepare Cypress
+        run: npm run cy:verify
 
       - name: Start MongoDB
         run: |
