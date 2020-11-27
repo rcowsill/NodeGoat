@@ -37,7 +37,7 @@ jobs:
 
       - name: Load cached MongoDB
         run: |
-          docker load -o ~/docker/mongodb.tar
+          docker load -i ~/docker/mongodb.tar
 
       - name: Start MongoDB
         run: |
