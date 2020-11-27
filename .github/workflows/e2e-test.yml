@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   e2e-test:
-    name: E2E Test - Node.js
+    name: Node.js
     runs-on: ubuntu-latest
 
     strategy:
@@ -38,7 +38,7 @@ jobs:
       - name: Start MongoDB and NodeGoat
         run: |
           docker run -d -p 27017:27017 mongo:4.0
-          docker ps -a
+          until nc -z -w 2 localhost 27017; do sleep 2; done
           NODE_ENV=test npm start -- --silent &
 
       - name: Run Cypress test suite
