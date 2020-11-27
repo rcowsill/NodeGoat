@@ -32,6 +32,7 @@ jobs:
       - name: Pull MongoDB
         run: |
           docker pull mongo:4.0
+          mkdir ~/docker
           docker save -o ~/docker/mongodb.tar mongo:4.0
 
       - name: Load cached MongoDB
