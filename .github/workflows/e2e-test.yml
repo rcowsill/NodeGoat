@@ -24,20 +24,29 @@ jobs:
             ~/.cache
           key: ${{ runner.os }}-node${{ matrix.node-version }}-cypress-${{ hashFiles('package-lock.json') }}
 
+      - uses: actions/cache@v2
+        id: imagecache
+        with:
+          path: |
+            ~/dockerimages
+          key: ${{ runner.os }}-dockerimages-${{ hashFiles('.github/workflows/e2e-test.yml') }}
+
       - name: Install dependencies
         run: |
           npm ci
           npm run cy:verify
 
       - name: Pull MongoDB
+        if: steps.imagecache.outputs.cache-hit != 'true'
         run: |
           docker pull mongo:4.0
-          mkdir ~/docker
-          docker save -o ~/docker/mongodb.tar mongo:4.0
+          mkdir ~/dockerimages
+          docker save -o ~/dockerimages/mongodb.tar mongo:4.0
 
       - name: Load cached MongoDB
+        if: steps.imagecache.outputs.cache-hit == 'true'
         run: |
-          docker load -i ~/docker/mongodb.tar
+          docker load -i ~/dockerimages/mongodb.tar
 
       - name: Start MongoDB
         run: |
