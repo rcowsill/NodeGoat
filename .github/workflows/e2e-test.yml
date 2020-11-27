@@ -38,7 +38,7 @@ jobs:
       - name: Start MongoDB and NodeGoat
         run: |
           docker run -d -p 27017:27017 mongo:4.0
-          until nc -z -w 2 localhost 27017; do sleep 2; done
+          timeout 60s bash -c 'until nc -z -w 2 localhost 27017; do sleep 2; done'
           NODE_ENV=test npm start -- --silent &
 
       - name: Run Cypress test suite
