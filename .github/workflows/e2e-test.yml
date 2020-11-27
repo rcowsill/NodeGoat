@@ -3,11 +3,12 @@ on: [push, pull_request]
 
 jobs:
   e2e-test:
+    name: E2E Test - Node.js: ${{ matrix.node-version }}
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: ["12.x"]
+        node-version: ["8.x", "10.x", "12.x"]
 
     steps:
       - name: Checkout https://github.com/${{ github.repository }} @ ${{ github.ref }}
@@ -34,12 +35,11 @@ jobs:
       - name: Prepare Cypress
         run: npm run cy:verify
 
-      - name: Start MongoDB
+      - name: Start MongoDB and NodeGoat
         run: |
           docker run -d -p 27017:27017 mongo:4.0
           docker ps -a
-
-      - name: Test E2E
-        run: |
           NODE_ENV=test npm start -- --silent &
-          npm run test:ci
+
+      - name: Run Cypress test suite
+        run: npm run test:ci
