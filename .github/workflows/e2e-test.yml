@@ -32,15 +32,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          du -d 0 -h ~/.npm || true
-          du -d 0 -h ~/.cache || true
           npm ci
           npm run cy:verify
-          du -d 0 -h ~/.npm || true
-          du -d 0 -h ~/.cache || true
+          which docker || true
+          docker version || true
+          which docker-compose || true
+          docker-compose version || true
 
       - name: Test E2E
         run: |
           NODE_ENV=test npm start -- --silent &
           npm run test:ci
-      
