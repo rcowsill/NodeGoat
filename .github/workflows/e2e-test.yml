@@ -3,13 +3,12 @@ on: [push, pull_request]
 
 jobs:
   e2e-test:
+    name: E2E Test - Node.js
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: ["8.x", "10.x", "12.x"]
-
-    name: E2E Test - Node.js: ${{ matrix.node-version }}
 
     steps:
       - name: Checkout https://github.com/${{ github.repository }} @ ${{ github.ref }}
