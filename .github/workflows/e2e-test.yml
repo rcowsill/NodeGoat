@@ -7,7 +7,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: ["8.x", "10.x", "12.x"]
+        node-version: ["12.x"]
 
     steps:
       - uses: actions/checkout@v2
@@ -28,6 +28,15 @@ jobs:
         run: |
           npm ci
           npm run cy:verify
+
+      - name: Pull MongoDB
+        run: |
+          docker pull mongo:4.0
+          docker save -o ~/docker/mongodb.tar mongo:4.0
+
+      - name: Load cached MongoDB
+        run: |
+          docker load -o ~/docker/mongodb.tar
 
       - name: Start MongoDB
         run: |
