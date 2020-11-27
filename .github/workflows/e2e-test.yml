@@ -9,6 +9,12 @@ jobs:
       matrix:
         node-version: ["10.x", "12.x"]
 
+    services:
+      mongo:
+        image: mongo:4.0
+        ports:
+          - 27017:27017
+
     steps:
       - uses: actions/checkout@v2
 
@@ -32,12 +38,8 @@ jobs:
           npm run cy:verify
           du -d 0 -h ~/.npm || true
           du -d 0 -h ~/.cache || true
-      - name: Start MongoDB
-        run: |
-          sudo apt-get install -y docker.io
-          docker run -d -p 27017:27017 mongo:4.0
-          docker ps -a
-      - name: Test nodegoat
+
+      - name: Test E2E
         run: |
           NODE_ENV=test npm start -- --silent &
           npm run test:ci
