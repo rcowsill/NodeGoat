@@ -30,4 +30,4 @@ jobs:
         run: npm ci
 
       - name: Run linter
-        run: npm run precommit
+        run: npx --no-install jshint -c .jshintrc --exclude node_modules/ .
