@@ -33,7 +33,9 @@ jobs:
           npm run cy:verify
 
       - name: Prepare images
-        run: NODE_ENV=test npm run build-infra
+        run: |
+          NODE_ENV=test npm run build-infra
+          docker images -a -q | xargs -L1 docker image inspect
 
       - name: Run Cypress test suite
         run: |
