@@ -46,6 +46,7 @@ jobs:
       - name: Prepare images
         run: |
           NODE_ENV=test docker-compose build
+          mkdir ~/docker-cache
           docker save -o ~/docker-cache/images.tar $(docker images -a -q)
           docker-compose pull
 
