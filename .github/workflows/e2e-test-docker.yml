@@ -35,8 +35,8 @@ jobs:
       - name: Use cache (images)
         uses: actions/cache@v2
         with:
-          path: ~/docker-images
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-docker-${{ hashFiles('package-lock.json') }}
+          path: ~/docker-cache
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-docker-cache-${{ hashFiles('package-lock.json') }}
         id: img-cache
 
       - name: Load cached images
