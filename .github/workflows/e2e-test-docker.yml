@@ -25,17 +25,17 @@ jobs:
           path: |
             ~/.npm
             ~/.cache
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-dev-cypress-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-cypress-${{ hashFiles('package-lock.json') }}
 
-      - name: Install development dependencies
+      - name: Install dependencies
         run: |
-          npm ci --only=development
+          npm ci
           npm run cy:verify
 
       - name: Prepare images
-        run: |
-          NODE_ENV=test npm run start-infra --silent
+        run: NODE_ENV=test npm run build-infra
 
       - name: Run Cypress test suite
         run: |
+          NODE_ENV=test npm run start-infra --silent &
           npm run test:ci
