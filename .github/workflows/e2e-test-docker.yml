@@ -39,21 +39,17 @@ jobs:
           key: ${{ runner.os }}-node${{ matrix.node-version }}-docker-${{ hashFiles('package-lock.json') }}
         id: img-cache
 
-      - name: List images
-        run: |
-          docker images -a
-          docker system prune --all --force
-
       - name: Load cached images
         if: steps.img-cache.outputs.cache-hit == 'true'
         run: docker load -i ~/docker-cache/images.tar || true
 
+      - name: Clear images
+        if: steps.img-cache.outputs.cache-hit != 'true'
+        run: docker system prune --all --force
+
       - name: Build images
         run: |
           NODE_ENV=test docker-compose build
-
-      - name: Save images
-        run: |
           docker images -a
           mkdir ~/docker-cache
           docker save -o ~/docker-cache/images.tar $(docker images -a -q)
