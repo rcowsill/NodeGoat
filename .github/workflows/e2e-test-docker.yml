@@ -1,0 +1,41 @@
+name: E2E Test (Docker)
+on: [push, pull_request]
+
+jobs:
+  e2e-test:
+    name: Docker + Node.js
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ["12.x"]
+
+    steps:
+      - name: Checkout https://github.com/${{ github.repository }} @ ${{ github.ref }}
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Use cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            ~/.cache
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-dev-cypress-${{ hashFiles('package-lock.json') }}
+
+      - name: Install development dependencies
+        run: |
+          npm ci --only=development
+          npm run cy:verify
+
+      - name: Prepare images
+        run: |
+          NODE_ENV=test npm run start-infra --silent
+
+      - name: Run Cypress test suite
+        run: |
+          npm run test:ci
