@@ -51,7 +51,7 @@ jobs:
           docker images -a
           NODE_ENV=test docker-compose build
           docker images -a
-          mkdir ~/docker-cache || true
+          mkdir -p ~/docker-cache
           docker save -o ~/docker-cache/images.tar $(docker images -a -q)
 
       - name: Pull images
