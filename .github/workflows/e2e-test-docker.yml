@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Use cache
+      - name: Use cache (dependencies)
         uses: actions/cache@v2
         with:
           path: |
@@ -32,10 +32,31 @@ jobs:
           npm ci
           npm run cy:verify
 
-      - name: Prepare images
+      - name: Use cache (images)
+        uses: actions/cache@v2
+        with:
+          path: ~/docker-cache
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-docker-cache-${{ hashFiles('package-lock.json') }}
+        id: img-cache
+
+      - name: Clear images
+        run: docker system prune --all --force
+
+      - name: Load cached images
+        if: steps.img-cache.outputs.cache-hit == 'true'
+        run: docker load -i ~/docker-cache/images.tar || true
+
+      - name: Build images
         run: |
-          NODE_ENV=test npm run build-infra
-          docker images -a -q | xargs -L1 docker image inspect
+          docker images -a
+          NODE_ENV=test docker-compose build
+          docker images -a
+          mkdir ~/docker-cache || true
+          docker save -o ~/docker-cache/images.tar $(docker images -a -q)
+
+      - name: Pull images
+        run: |
+          docker-compose pull
 
       - name: Run Cypress test suite
         run: |
