@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         node-version: ["12.x"]
+        fail-fast: false
 
     steps:
       - name: Checkout https://github.com/${{ github.repository }} @ ${{ github.ref }}
