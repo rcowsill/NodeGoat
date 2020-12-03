@@ -35,31 +35,8 @@ jobs:
           npm ci
           npm run cy:verify
 
-      - name: Use cache (images)
-        uses: actions/cache@v2
-        with:
-          path: ~/docker-cache
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-docker-cache-${{ hashFiles('package-lock.json') }}
-        id: img-cache
-
-      - name: Clear images
-        run: docker system prune --all --force
-
-      - name: Load cached images
-        if: steps.img-cache.outputs.cache-hit == 'true'
-        run: docker load -i ~/docker-cache/images.tar || true
-
-      - name: Build images
-        run: |
-          docker images -a
-          NODE_ENV=test docker-compose build
-          docker images -a
-          mkdir -p ~/docker-cache
-          docker save -o ~/docker-cache/images.tar $(docker images -a -q)
-
-      - name: Pull images
-        run: |
-          docker-compose pull
+      - name: Prepare images
+        run: NODE_ENV=test npm run build-infra
 
       - name: Run Cypress test suite
         run: |
