@@ -34,9 +34,20 @@ jobs:
         run: |
           npm ci
           npm run cy:verify
+          docker-compose pull
+
+      - name: Use cache (docker layers)
+        uses: satackey/action-docker-layer-caching@v0.0.8
+        continue-on-error: true
+        with:
+          key: docker-cache-{hash}
+          restore-keys: |
+            docker-cache-
 
       - name: Prepare images
-        run: NODE_ENV=test npm run build-infra
+        run: |
+          docker images -a
+          NODE_ENV=test docker-compose build
 
       - name: Run Cypress test suite
         run: |
