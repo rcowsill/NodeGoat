@@ -1,4 +1,4 @@
-name: E2E Test (Docker)
+name: E2E Test (Docker 2)
 on: [push, pull_request]
 
 jobs:
