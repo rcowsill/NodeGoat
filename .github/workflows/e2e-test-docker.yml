@@ -1,4 +1,4 @@
-name: E2E Test, (Docker)
+name: E2E Test (Docker)
 on: [push, pull_request]
 
 jobs:
@@ -41,6 +41,8 @@ jobs:
         continue-on-error: true
         with:
           key: docker-cache-{hash}
+          restore-keys: |
+            docker-cache-
 
       - name: Prepare images
         run: |
