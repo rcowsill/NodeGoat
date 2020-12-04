@@ -37,12 +37,12 @@ jobs:
           docker-compose pull
 
       - name: Use cache (docker layers)
-        uses: satackey/action-docker-layer-caching@v0.0.8
+        uses: rcowsill/action-docker-layer-caching@test/no-recache-release
         continue-on-error: true
         with:
-          key: docker-cache-{hash}
+          key: my-docker-cache-{hash}
           restore-keys: |
-            docker-cache-
+            my-docker-cache-
 
       - name: Prepare images
         run: |
