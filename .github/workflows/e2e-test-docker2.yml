@@ -41,9 +41,9 @@ jobs:
         continue-on-error: true
         with:
           concurrency: 1
-          key: f81-docker-cache-v6-{hash}
+          key: f81-docker-cache-v7-{hash}
           restore-keys: |
-            f81-docker-cache-v6-
+            f81-docker-cache-v7-
 
       - name: Prepare images
         run: |
