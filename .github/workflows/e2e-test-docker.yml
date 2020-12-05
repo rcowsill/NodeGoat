@@ -40,9 +40,9 @@ jobs:
         uses: rcowsill/action-docker-layer-caching@test/fix-81-release
         continue-on-error: true
         with:
-          key: my-docker-cache-v3-{hash}
+          key: my-docker-cache-v4-{hash}
           restore-keys: |
-            my-docker-cache-v3-
+            my-docker-cache-v4-
 
       - name: Prepare images
         run: |
