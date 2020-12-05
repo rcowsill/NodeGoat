@@ -40,9 +40,10 @@ jobs:
         uses: rcowsill/action-docker-layer-caching@test/fix-81-release
         continue-on-error: true
         with:
-          key: my-docker-cache-v5-{hash}
+          concurrency: 1
+          key: my-docker-cache-v6-{hash}
           restore-keys: |
-            my-docker-cache-v5-
+            my-docker-cache-v6-
 
       - name: Prepare images
         run: |
