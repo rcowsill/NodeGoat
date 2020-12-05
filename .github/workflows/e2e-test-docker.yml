@@ -37,7 +37,7 @@ jobs:
           docker-compose pull
 
       - name: Use cache (docker layers)
-        uses: rcowsill/action-docker-layer-caching@test/no-recache-release
+        uses: rcowsill/action-docker-layer-caching@test/fix-81
         continue-on-error: true
         with:
           key: my-docker-cache-v2-{hash}
