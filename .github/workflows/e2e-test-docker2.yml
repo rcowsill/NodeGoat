@@ -40,9 +40,9 @@ jobs:
         uses: satackey/action-docker-layer-caching@v0.0.8
         continue-on-error: true
         with:
-          key: new-docker-cache-v2-{hash}
+          key: new-docker-cache-v3-{hash}
           restore-keys: |
-            new-docker-cache-v2-
+            new-docker-cache-v3-
 
       - name: Prepare images
         run: |
