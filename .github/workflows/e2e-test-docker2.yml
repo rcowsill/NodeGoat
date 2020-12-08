@@ -41,9 +41,9 @@ jobs:
         continue-on-error: true
         with:
           concurrency: 1
-          key: main-docker-cache-v8-{hash}
+          key: main-docker-cache-v9-{hash}
           restore-keys: |
-            main-docker-cache-v8-
+            main-docker-cache-v9-
 
       - name: Prepare images
         run: |

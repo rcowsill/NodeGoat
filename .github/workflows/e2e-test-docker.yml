@@ -37,13 +37,13 @@ jobs:
           docker-compose pull
 
       - name: Use cache (docker layers)
-        uses: rcowsill/action-docker-layer-caching@master
+        uses: rcowsill/action-docker-layer-caching@test/fix-75-release
         continue-on-error: true
         with:
           concurrency: 1
-          key: my-docker-cache-v8-{hash}
+          key: my-docker-cache-v9-{hash}
           restore-keys: |
-            my-docker-cache-v8-
+            my-docker-cache-v9-
 
       - name: Prepare images
         run: |
