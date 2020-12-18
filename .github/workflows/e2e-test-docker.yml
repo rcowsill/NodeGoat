@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   e2e-test:
-    name: Docker + Node.js
+    name: Docker & Node.js
     runs-on: ubuntu-latest
 
     strategy:
@@ -41,9 +41,9 @@ jobs:
         continue-on-error: true
         with:
           concurrency: 1
-          key: my-docker-cache-v10-{hash}
+          key: my-docker-cache-v11-{hash}
           restore-keys: |
-            my-docker-cache-v10-
+            my-docker-cache-v11-
 
       - name: Prepare images
         run: |
