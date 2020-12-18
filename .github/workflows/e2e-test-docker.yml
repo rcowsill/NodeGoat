@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   e2e-test:
-    name: Docker & Node.js
+    name: Docker + Node.js
     runs-on: ubuntu-latest
 
     strategy:
