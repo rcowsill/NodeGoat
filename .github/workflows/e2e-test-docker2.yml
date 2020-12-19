@@ -41,9 +41,9 @@ jobs:
         continue-on-error: true
         with:
           concurrency: 1
-          key: main-docker-cache-v11-{hash}
+          key: main-docker-cache-v12-{hash}
           restore-keys: |
-            main-docker-cache-v11-
+            main-docker-cache-v12-
 
       - name: Prepare images
         run: |
