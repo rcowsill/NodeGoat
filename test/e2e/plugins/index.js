@@ -19,5 +19,15 @@ module.exports = (on, config) => {
 
   config.baseUrl = `http://${hostName}:${port}`;
 
+  const tags = config.env.TEST_TAGS;
+  if (!Array.isArray(tags)) {
+    config.env.TEST_TAGS = [];
+
+    if (tags !== undefined) {
+      config.env.TEST_TAGS = tags.split(",");
+    }
+  }
+  console.log(`TEST_TAGS: [${config.env.TEST_TAGS.join(", ")}]`);
+
   return config;
 };
